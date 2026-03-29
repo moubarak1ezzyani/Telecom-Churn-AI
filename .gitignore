@@ -2,6 +2,7 @@ ChurnVenv/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+data
 data/raw/DocumentationBriefI.txt
 data/raw/ChurnDataFile.csv
 
