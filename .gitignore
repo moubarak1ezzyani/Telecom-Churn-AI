@@ -1,8 +1,12 @@
-ChurnVenv/
+venv/
+.venv/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
-data
+
+# files
+data/
+notebooks/test.ipynb
 data/raw/DocumentationBriefI.txt
 data/raw/ChurnDataFile.csv
 
