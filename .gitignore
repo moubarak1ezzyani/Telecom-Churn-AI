@@ -3,11 +3,12 @@ venv/
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
+.pytest_cache/
 
 # files
 data/
 models/
-output.txt/
+output.txt
 notebooks/test.ipynb
 data/raw/DocumentationBriefI.txt
 data/raw/ChurnDataFile.csv
