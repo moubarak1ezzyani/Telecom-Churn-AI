@@ -6,6 +6,8 @@ __pycache__/
 
 # files
 data/
+models/
+output.txt/
 notebooks/test.ipynb
 data/raw/DocumentationBriefI.txt
 data/raw/ChurnDataFile.csv

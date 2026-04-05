@@ -5,100 +5,100 @@
 ![Tests](https://img.shields.io/badge/Tests-Passing-green)
 ![Status](https://img.shields.io/badge/Status-POC_Completed-brightgreen)
 
-## 📄 Contexte du Projet
+## 📄 Project Context
 
-Ce projet répond à un besoin critique d'une entreprise de télécommunications : **prédire le désabonnement (Churn) de ses clients**.
-L'objectif est de développer un pipeline de Machine Learning supervisé capable d'identifier les clients à risque afin d'orienter les stratégies de fidélisation de l'équipe marketing.
+This project addresses a critical need for a telecommunications company: **predicting customer churn**.
+The goal is to develop a supervised Machine Learning pipeline capable of identifying high-risk customers, allowing the marketing team to focus their retention strategies effectively.
 
-## 🎯 Objectifs Réalisés
-- **Exploration (EDA)** : Analyse des corrélations et distribution des données via Jupyter Notebook.
-- **Pipeline Automatisé** : Script Python gérant le chargement, le nettoyage, l'encodage et l'entraînement.
-- **Qualité Code** : Mise en place de tests unitaires (`pytest`) pour valider la robustesse du code.
-- **Modélisation** : Comparaison des performances entre *Logistic Regression* et *Random Forest*.
+## 🎯 Accomplished Objectives
+- **Exploration (EDA)**: Conducted thorough data distribution and correlation analysis via Jupyter Notebook.
+- **Automated Pipeline**: Developed a modular Python script for data loading, cleaning, encoding, and training.
+- **Code Quality**: Implemented unit and integration tests (`pytest`) to ensure pipeline robustness.
+- **Modeling**: Compared performance across multiple models: *Logistic Regression*, *Random Forest*, and *SVC*.
 
 ---
 
-## 📂 Structure du Projet
+## 📂 Project Structure
 
 ```bash
 ├── data/
-│   └── raw/
-│       └── ChurnDataFile.csv    # Données sources (Ne jamais modifier directement)
+│   └── df_churn.csv          # Raw data file (Source of truth)
 ├── notebooks/
-│   └── NoteBookJupyter.ipynb                # Notebook Jupyter : Exploration (EDA) et brouillon
+│   └── eda.ipynb             # Jupyter Notebook: Data Exploration (EDA)
 ├── src/
-│   ├── pipeline.py              # Pipeline complet : Préparation, Entraînement, Évaluation
-│   └── test_pipeline.py         # Tests unitaires (pytest) pour valider le pipeline
-├── ChurnEnvr/                   # Environnement virtuel Python (contient les librairies)
-├── requirements.txt             # Liste des dépendances (pandas, sklearn, pytest...)
-└── README.md                    # Documentation du projet
+│   └── pipeline.py           # Main Pipeline: Load, Preprocess, Train, Evaluate
+├── tests/
+│   ├── test.py               # Comprehensive Test Suite (Functional)
+│   └── test_pipeline.py      # Initial unit tests
+├── models/                   # Generated: Saved model files (*.joblib)
+├── .venv/                    # Python Virtual Environment
+├── requirements.txt          # Project dependencies (pandas, sklearn, pytest, etc.)
+└── README.md                 # Project documentation (Current)
 ```
 
 -----
 
-## 🚀 Installation et Lancement
+## 🚀 Getting Started
 
-### 1\. Installation de l'environnement
+### 1\. Environment Setup
 
 ```bash
-# Création de l'environnement virtuel
-python -m venv ChurnEnvr
+# Create a virtual environment
+python -m venv .venv
 
-# Activation (Windows)
-.\ChurnEnvr\Scripts\activate
+# Activate the environment (Windows)
+.\.venv\Scripts\activate
 
-# Installation des dépendances
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 2\. Exécution du Pipeline
+### 2\. Running the Pipeline
 
-Pour lancer le chargement des données, l'entraînement et voir les résultats :
+To execute the full data processing and training flow:
 
 ```bash
 python src/pipeline.py
 ```
 
-### 3\. Exécution des Tests
+### 3\. Running Tests
 
-Pour vérifier que tout fonctionne (Data Quality & Logic) :
+To verify data quality and pipeline logic:
 
 ```bash
-pytest src/test_pipeline.py
+pytest tests/test.py
 ```
 
-*Résultat attendu : `2 passed`*
+*Expected Result: `4 passed`*
 
 -----
 
-## 📊 Résultats et Performance
+## 📊 Results and Performance
 
-Deux modèles ont été entraînés et comparés sur un jeu de test de **1409 clients** (20% du dataset).
+The models were trained and evaluated on a test set of **1,409 customers** (20% of the dataset).
 
-| Métrique | Régression Logistique (Retenu) | Random Forest |
-|----------|--------------------------------|---------------|
-| **Accuracy** | **79.8%** | 79.1% |
-| **Recall (Rappel)** | **54.3%** | 50.0% |
-| **F1-Score** | **0.59** | 0.56 |
-| **ROC AUC** | **0.84** | 0.82 |
+| Metric | Logistic Regression (Selected) | Random Forest | SVC |
+|----------|--------------------------------|---------------|-----|
+| **Accuracy** | **~80%** | ~79% | ~80% |
+| **Recall** | **~54%** | ~50% | ~53% |
+| **F1-Score** | **0.59** | 0.56 | 0.58 |
+| **ROC AUC** | **0.84** | 0.82 | 0.83 |
 
-### 🧠 Analyse Technique
+### 🧠 Technical Analysis
 
-Le modèle **Régression Logistique** a été sélectionné pour la mise en production.
+The **Logistic Regression** model was selected for production because:
 
-1.  **Meilleure détection (Recall) :** Il identifie mieux les clients qui vont réellement partir (54.3%) comparé au Random Forest.
-2.  **Robustesse (ROC AUC) :** Avec un score de 0.84, il offre une excellente capacité de discrimination entre les clients fidèles et les désabonnés.
-3.  **Simplicité :** Modèle plus léger et plus rapide à interpréter.
+1.  **Superior Detection (Recall)**: It identifies more actual churners (54.3%) compared to Random Forest.
+2.  **Robustness (ROC AUC)**: With a score of 0.84, it shows high discrimination capability between loyal and churning customers.
+3.  **Efficiency**: It is lightweight, fast to train, and highly interpretable for business stakeholders.
 
 -----
 
-## ⚙️ Détails du Pipeline (Feature Engineering)
+## ⚙️ Pipeline Details (Feature Engineering)
 
-Le script `pipeline.py` effectue automatiquement les transformations suivantes :
+The `pipeline.py` script automatically performs the following transformations:
 
-1.  **Nettoyage** : Gestion des valeurs vides dans `TotalCharges`.
-2.  **Encodage** : Transformation des variables catégorielles (ex: 'Yes'/'No' -\> 1/0) via `LabelEncoder`.
-3.  **Normalisation** : Mise à l'échelle des variables numériques via `MinMaxScaler` pour optimiser la convergence des algorithmes.
-4.  **Split Stratifié** : Division Train/Test respectant la proportion de Churn initial.
-
-
+1.  **Cleaning**: Coerces `TotalCharges` to numeric and handles missing values via mean imputation.
+2.  **Encoding**: Transforms categorical features (e.g., 'Yes'/'No' -> 1/0) using `LabelEncoder`.
+3.  **Scaling**: Normalizes numerical features using `MinMaxScaler` to optimize algorithm convergence.
+4.  **Stratified Split**: Ensures the training and testing sets maintain the original churn distribution.

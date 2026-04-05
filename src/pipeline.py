@@ -9,7 +9,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, classification_report, f1_score, recall_score, roc_auc_score
 
-def load_data(filepath="./data/raw/ChurnDataFile.csv"):
+def load_data(filepath="./data/df_churn.csv"):
     """
     Loads dataset from filepath. 
     Handles relative path fallback for use in notebooks vs scripts.
